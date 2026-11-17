@@ -1,704 +1,334 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mishra Family | Griha Pravesh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Mishra Family | Griha Pravesh</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ background:#170b12;color:#f7dfaa;
+ font-family:Georgia,serif;overflow:hidden;
 }
-
-body {
-  background: #180d12;
-  color: #f8e6b5;
-  font-family: Georgia, serif;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+button{font-family:inherit;cursor:pointer}
+#particles{position:fixed;inset:0;pointer-events:none;z-index:5}
+.spark{
+ position:absolute;bottom:-20px;color:#e8bd69;
+ animation:floatUp linear infinite;opacity:0;
 }
-
-body::before {
-  content: "✦  ·  ✧  ·  ✦  ·  ✧";
-  position: fixed;
-  top: 8%;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  color: #d9ae59;
-  opacity: .6;
-  letter-spacing: 18px;
-  pointer-events: none;
+@keyframes floatUp{
+ 0%{transform:translateY(0) rotate(0);opacity:0}
+ 15%{opacity:.8}
+ 85%{opacity:.6}
+ 100%{transform:translateY(-110vh) rotate(360deg);opacity:0}
 }
-
-.app {
-  width: min(92%, 430px);
-  height: min(740px, 88dvh);
-  min-height: 520px;
-  position: relative;
-  border: 1px solid #c9a45e;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 0 45px #bd8d3830;
-  background: #421e2a;
+#intro{
+ position:fixed;inset:0;z-index:20;
+ display:flex;align-items:center;justify-content:center;
+ background:radial-gradient(circle,#60313b,#170810 75%);
+ overflow:hidden;transition:opacity 1s,visibility 1s;
 }
-
-.slide {
-  position: absolute;
-  inset: 0;
-  padding: 35px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(50px) scale(.96);
-  transition: opacity .55s ease,
-              transform .55s ease,
-              visibility .55s;
-  background:
-    radial-gradient(ellipse at top, #713c43, transparent 65%),
-    linear-gradient(145deg, #351721, #180e16);
+#intro.hide{opacity:0;visibility:hidden}
+.intro-content{
+ text-align:center;z-index:2;padding:20px;
+ transition:opacity .5s;
 }
-
-.slide.active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0) scale(1);
-  z-index: 2;
+.eyebrow{letter-spacing:5px;font-size:11px;color:#eacb8c}
+.intro-content h1{
+ font-size:clamp(35px,10vw,65px);
+ color:#f5d18a;margin:20px 0;
+ text-shadow:0 0 30px #e3a84e;
 }
-
-.slide h1 {
-  color: #f5d58b;
-  font-size: clamp(30px, 9vw, 43px);
-  margin: 15px 0;
-  text-shadow: 0 0 15px #d7a54b66;
+.enter{
+ background:linear-gradient(135deg,#f4d99c,#b77b35);
+ color:#32131d;border:0;padding:15px 30px;
+ border-radius:40px;font-weight:bold;
+ letter-spacing:2px;margin-top:30px;
+ box-shadow:0 0 30px #d6a44c55;
 }
-
-.slide h2 {
-  color: #e8c77e;
-  font-size: 25px;
-  margin: 14px 0;
+.door{
+ position:absolute;top:0;bottom:0;width:50%;
+ background:linear-gradient(90deg,#2d101b,#9a6438,#32131c);
+ border:5px ridge #d8ae64;
+ box-shadow:inset 0 0 35px #10070b;
+ z-index:3;transition:transform 2.2s cubic-bezier(.7,0,.2,1);
 }
-
-.slide p {
-  color: #f4e4c7;
-  line-height: 1.8;
-  font-size: 16px;
+.door:after{
+ content:"✧";position:absolute;top:42%;
+ color:#f5d28c;font-size:50px;
 }
-
-.ornament {
-  color: #e7bd69;
-  font-size: 40px;
-  margin: 15px;
+.left{left:0;border-right:4px solid #e4bf76}
+.right{right:0;border-left:4px solid #e4bf76}
+.left:after{right:15px}
+.right:after{left:15px}
+.open .left{transform:translateX(-100%)}
+.open .right{transform:translateX(100%)}
+#main{
+ width:100%;height:100dvh;display:flex;
+ justify-content:center;align-items:center;
+ padding:15px;
 }
-
-.small {
-  letter-spacing: 4px;
-  font-size: 11px !important;
-  color: #dcbf87 !important;
+.deck{
+ width:min(100%,440px);height:min(760px,92dvh);
+ min-height:500px;position:relative;
+ border:1px solid #d6b36d;border-radius:22px;
+ overflow:hidden;
+ background:#351923;
+ box-shadow:0 0 60px #c08c4030;
 }
-
-.gold-line {
-  width: 70%;
-  height: 1px;
-  background: linear-gradient(
-    to right, transparent, #e5bd70, transparent
-  );
-  margin: 22px 0;
+.page{
+ position:absolute;inset:0;padding:40px 25px 105px;
+ display:flex;flex-direction:column;
+ align-items:center;justify-content:center;
+ text-align:center;
+ opacity:0;visibility:hidden;
+ transform:translateX(100%) rotateY(-12deg) scale(.94);
+ transition:transform .75s cubic-bezier(.2,.8,.2,1),
+ opacity .6s,visibility .6s;
+ background:
+ radial-gradient(ellipse at 50% 10%,#78434a 0%,transparent 55%),
+ linear-gradient(145deg,#3e1d29,#190d16);
 }
-
-.names {
-  line-height: 2.3;
-  color: #f6dfaa;
-  font-size: 19px;
+.page.active{
+ opacity:1;visibility:visible;
+ transform:translateX(0) rotateY(0) scale(1);
+ z-index:2;
 }
-
-.address {
-  color: #fff0d0;
-  font-size: 19px;
-  line-height: 2;
+.page.prev{
+ transform:translateX(-100%) rotateY(12deg) scale(.94);
 }
-
-.house {
-  font-size: 85px;
-  filter: drop-shadow(0 0 15px #e3b66c);
-  animation: glow 2s infinite alternate;
+.frame{
+ position:absolute;inset:12px;
+ border:1px solid #c49a54;border-radius:15px;
+ pointer-events:none;
 }
-
-@keyframes glow {
-  from { transform: scale(1); }
-  to { transform: scale(1.08); }
+.frame:before,.frame:after{
+ content:"✧";position:absolute;color:#eac77f;font-size:25px;
 }
-
-@keyframes sparkle {
-  0% { opacity: .2; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(-10px); }
+.frame:before{top:5px;left:8px}
+.frame:after{bottom:5px;right:8px}
+h1{
+ font-size:clamp(32px,9vw,48px);
+ color:#f3d18a;margin:16px 0;
+ text-shadow:0 0 18px #c28d45;
 }
-
-.sparkle {
-  animation: sparkle 2s infinite alternate;
+h2{font-size:27px;color:#f0ce88;margin:14px 0}
+p{font-size:16px;line-height:1.8;color:#f4e4ca}
+.gold{color:#f0ca7d}
+.label{
+ font-size:10px;letter-spacing:5px;color:#d9b77c;
+ margin-bottom:12px;
 }
-
-.controls {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  z-index: 5;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 15px;
+.flower{font-size:42px;margin:12px}
+.line{
+ width:70%;height:1px;
+ background:linear-gradient(90deg,transparent,#e7c17b,transparent);
+ margin:20px 0;
 }
-
-button {
-  background: #d5ad68;
-  color: #351721;
-  border: none;
-  padding: 11px 17px;
-  border-radius: 30px;
-  font-weight: bold;
-  cursor: pointer;
+.names{font-size:19px;line-height:2.25;color:#f5dca8}
+.big-house{font-size:85px;animation:breathe 3s infinite alternate}
+@keyframes breathe{to{transform:scale(1.12);filter:drop-shadow(0 0 20px gold)}}
+.reveal{animation:reveal 1s both}
+@keyframes reveal{
+ from{opacity:0;transform:translateY(25px)}
+ to{opacity:1;transform:translateY(0)}
 }
-
-button:active {
-  transform: scale(.95);
+.navigation{
+ position:absolute;bottom:20px;left:0;right:0;
+ z-index:10;display:flex;align-items:center;
+ justify-content:space-around;padding:0 15px;
 }
-
-.dots {
-  display: flex;
-  gap: 8px;
+.navbtn{
+ border:1px solid #d3ad6c;background:#6d3c37;
+ color:#ffe4ae;border-radius:30px;
+ padding:11px 17px;font-size:13px;
 }
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #80624a;
-  border: 1px solid #e5c47e;
+.dots{display:flex;gap:8px}
+.dot{
+ width:8px;height:8px;border-radius:50%;
+ border:1px solid #e4c17e;background:transparent;
 }
-
-.dot.active {
-  background: #f5d58b;
-  transform: scale(1.35);
+.dot.active{background:#f1ce83;box-shadow:0 0 10px gold}
+.hint{
+ position:absolute;bottom:76px;z-index:8;
+ width:100%;text-align:center;font-size:10px;
+ letter-spacing:2px;color:#d9b77c;
 }
-
-.hint {
-  position: absolute;
-  bottom: 75px;
-  width: 100%;
-  font-size: 12px;
-  color: #dfc38e;
-  text-align: center;
-  z-index: 4;
-  letter-spacing: 1px;
+.music{
+ position:fixed;top:16px;right:16px;z-index:30;
+ border:1px solid #d6b36d;background:#32131d;
+ color:#f4d594;border-radius:50%;width:42px;height:42px;
 }
-
 </style>
 </head>
 
 <body>
+<div id="particles"></div>
 
-<div class="app" id="app">
+<!-- OPENING -->
+<div id="intro">
+ <div class="intro-content" id="welcome">
+  <p class="eyebrow">ॐ श्री गणेशाय नमः</p>
+  <div class="flower">✧ ❀ ✧</div>
+  <h1>शुभारंभ</h1>
+  <p>THE MISHRA FAMILY</p>
+  <p class="eyebrow" style="margin-top:15px">INVITES YOU TO A NEW BEGINNING</p>
+  <button class="enter" onclick="openDoors()">OPEN INVITATION ✦</button>
+ </div>
+ <div class="door left"></div>
+ <div class="door right"></div>
+</div>
 
-  <!-- CARD 1 -->
-  <section class="slide active">
-    <p class="small">ॐ श्री गणेशाय नमः</p>
-    <div class="ornament sparkle">✧ ❀ ✧</div>
-    <p class="small">A NEW BEGINNING</p>
-    <h1>शुभारंभ</h1>
-    <div class="gold-line"></div>
-    <h2>GRUHA PRAVESH</h2>
-    <p>HOUSE INAUGURATION CEREMONY</p>
-    <div class="ornament">🏡</div>
-    <p>20th November</p>
-    <p class="small">A HOME FILLED WITH LOVE & HAPPINESS</p>
+<button class="music" onclick="toggleMusic()" id="musicBtn">♫</button>
+
+<div id="main">
+ <div class="deck" id="deck">
+
+  <!-- PAGE 1 -->
+  <section class="page active">
+   <div class="frame"></div>
+   <p class="label reveal">A NEW CHAPTER BEGINS</p>
+   <div class="flower reveal">✧ ❀ ✧</div>
+   <h1 class="reveal">शुभारंभ</h1>
+   <div class="line"></div>
+   <h2 class="reveal">GRUHA PRAVESH</h2>
+   <p class="label">HOUSE INAUGURATION CEREMONY</p>
+   <div class="flower">🏡</div>
+   <h2>20th November</h2>
+   <p class="gold">A home filled with love, laughter & blessings</p>
   </section>
 
-  <!-- CARD 2 -->
-  <section class="slide">
-    <div class="ornament">❀</div>
-    <p class="small">YOU ARE CORDIALLY INVITED</p>
-    <h2>A Beautiful New Beginning</h2>
-    <div class="gold-line"></div>
-    <p>
-      With immense joy and happiness,
-      we invite you and your family
-      to grace the auspicious occasion
-      of our new home inauguration.
-    </p>
-    <br>
-    <p>Your presence and blessings will
-      make this day truly special.
-    </p>
-    <div class="ornament">✧</div>
+  <!-- PAGE 2 -->
+  <section class="page">
+   <div class="frame"></div>
+   <div class="flower">❀</div>
+   <p class="label">YOU ARE CORDIALLY INVITED</p>
+   <h2>A Beautiful New Beginning</h2>
+   <div class="line"></div>
+   <p>
+    With immense joy and happiness,
+    we invite you and your family to grace
+    the auspicious occasion of our new
+    home inauguration.
+   </p>
+   <div class="flower">✧</div>
+   <p>Your presence and blessings will make
+    this celebration truly memorable.</p>
+   <h2 class="gold">We await you!</h2>
   </section>
 
-  <!-- CARD 3 -->
-  <section class="slide">
-    <p class="small">WITH LOVE & BLESSINGS</p>
-    <div class="ornament">❀</div>
-    <h2>The Mishra Family</h2>
-    <div class="gold-line"></div>
-    <div class="names">
-      Uma Shankar Mishra<br>
-      Late Anjani Ku. Mishra<br>
-      Agrima Mishra<br>
-      Anvesha Mishra
-    </div>
-    <div class="gold-line"></div>
-    <p>With the blessings of our elders,
-      we begin a beautiful new chapter.
-    </p>
+  <!-- PAGE 3 -->
+  <section class="page">
+   <div class="frame"></div>
+   <p class="label">WITH LOVE & BLESSINGS</p>
+   <div class="flower">❀</div>
+   <h2>THE MISHRA FAMILY</h2>
+   <div class="line"></div>
+   <div class="names">
+    Uma Shankar Mishra<br>
+    Late Anjani Ku. Mishra<br>
+    Agrima Mishra<br>
+    Anvesha Mishra
+   </div>
+   <div class="line"></div>
+   <p>With the blessings of our elders,
+   we begin a beautiful new chapter.</p>
   </section>
 
-  <!-- CARD 4 -->
-  <section class="slide">
-    <div class="house">🏡</div>
-    <p class="small">WE AWAIT YOUR PRESENCE</p>
-    <h2>Join Our Celebration</h2>
-    <div class="gold-line"></div>
-    <p class="small">DATE</p>
-    <h2>20th November</h2>
-    <p class="small">TIME</p>
-    <h2>10:00 AM</h2>
-    <div class="gold-line"></div>
-    <p class="small">VENUE</p>
-    <div class="address">
-      Satipara,<br>
-      Near Manas Palace
-    </div>
-    <br>
-    <h2>Thank You!</h2>
-    <p class="small">THE MISHRA FAMILY</p>
+  <!-- PAGE 4 -->
+  <section class="page">
+   <div class="frame"></div>
+   <div class="big-house">🏡</div>
+   <p class="label">THE CELEBRATION</p>
+   <h2>Join Our Happiness</h2>
+   <div class="line"></div>
+   <p class="label">DATE</p>
+   <h2>20th November</h2>
+   <p class="label">TIME</p>
+   <h2>10:00 AM</h2>
+   <div class="line"></div>
+   <p class="label">VENUE</p>
+   <p>Satipara,<br>Near Manas Palace</p>
+   <div class="flower">✧</div>
+   <p class="gold">Your presence is our greatest gift.</p>
+   <p class="label">THE MISHRA FAMILY</p>
   </section>
 
-  <div class="hint" id="hint">
-    ← SWIPE TO EXPLORE →
+  <div class="hint" id="hint">← SWIPE TO EXPLORE →</div>
+  <div class="navigation">
+   <button class="navbtn" onclick="move(-1)">← BACK</button>
+   <div class="dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+   </div>
+   <button class="navbtn" onclick="move(1)">NEXT →</button>
   </div>
-
-  <div class="controls">
-    <button onclick="changeSlide(-1)">← Back</button>
-    <div class="dots" id="dots">
-      <span class="dot active"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-    </div>
-    <button onclick="changeSlide(1)">Next →</button>
-  </div>
-
+ </div>
 </div>
 
 <script>
-let current = 0;
+let current=0;
+const pages=document.querySelectorAll('.page');
+const dots=document.querySelectorAll('.dot');
+const intro=document.getElementById('intro');
+const deck=document.getElementById('deck');
 
-const slides = document.querySelectorAll(".slide");
-const dots = document.querySelectorAll(".dot");
-const hint = document.getElementById("hint");
-
-function showSlide(index) {
-  current = (index + slides.length) % slides.length;
-
-  slides.forEach((slide, i) => {
-    slide.classList.toggle("active", i === current);
-  });
-
-  dots.forEach((dot, i) => {
-    dot.classList.toggle("active", i === current);
-  });
-
-  hint.textContent = current === 3
-    ? "THANK YOU FOR CELEBRATING WITH US ✧"
-    : "← SWIPE TO EXPLORE →";
+function openDoors(){
+ intro.classList.add('open');
+ document.getElementById('welcome').style.opacity='0';
+ setTimeout(()=>intro.classList.add('hide'),2100);
 }
 
-function changeSlide(direction) {
-  showSlide(current + direction);
+function move(n){
+ const old=current;
+ current=(current+n+pages.length)%pages.length;
+ pages.forEach((p,i)=>{
+  p.classList.remove('active','prev');
+  if(i===current)p.classList.add('active');
+  else if(i===old && n>0)p.classList.add('prev');
+ });
+ dots.forEach((d,i)=>d.classList.toggle('active',i===current));
+ document.getElementById('hint').textContent=
+ current===3?'THANK YOU FOR CELEBRATING WITH US ✧':'← SWIPE TO EXPLORE →';
 }
 
-// Swipe support
-let startX = 0;
-const app = document.getElementById("app");
+let startX=0;
+deck.addEventListener('touchstart',e=>{
+ startX=e.changedTouches[0].clientX;
+},{passive:true});
 
-app.addEventListener("touchstart", (e) => {
-  startX = e.changedTouches[0].screenX;
-}, { passive: true });
+deck.addEventListener('touchend',e=>{
+ let distance=e.changedTouches[0].clientX-startX;
+ if(Math.abs(distance)>45)move(distance<0?1:-1);
+},{passive:true});
 
-app.addEventListener("touchend", (e) => {
-  let endX = e.changedTouches[0].screenX;
-  let distance = endX - startX;
-
-  if (Math.abs(distance) > 45) {
-    changeSlide(distance < 0 ? 1 : -1);
-  }
-}, { passive: true });
-
-// Keyboard support
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") changeSlide(1);
-  if (e.key === "ArrowLeft") changeSlide(-1);
+document.addEventListener('keydown',e=>{
+ if(e.key==='ArrowRight')move(1);
+ if(e.key==='ArrowLeft')move(-1);
 });
+
+// Floating golden particles
+const particleArea=document.getElementById('particles');
+for(let i=0;i<35;i++){
+ const s=document.createElement('span');
+ s.className='spark';
+ s.textContent=['✦','✧','•','❀'][i%4];
+ s.style.left=Math.random()*100+'%';
+ s.style.animationDuration=(5+Math.random()*9)+'s';
+ s.style.animationDelay=(-Math.random()*12)+'s';
+ s.style.fontSize=(8+Math.random()*13)+'px';
+ particleArea.appendChild(s);
+}
+
+// Optional music: browser requires a user gesture.
+// Connect your own audio file if you want background music.
+function toggleMusic(){
+ alert('You can add your own instrumental audio file to enable background music.');
+}
 </script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mishra Family | Griha Pravesh</title>
-
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background: #180d12;
-  color: #f8e6b5;
-  font-family: Georgia, serif;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-body::before {
-  content: "✦  ·  ✧  ·  ✦  ·  ✧";
-  position: fixed;
-  top: 8%;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  color: #d9ae59;
-  opacity: .6;
-  letter-spacing: 18px;
-  pointer-events: none;
-}
-
-.app {
-  width: min(92%, 430px);
-  height: min(740px, 88dvh);
-  min-height: 520px;
-  position: relative;
-  border: 1px solid #c9a45e;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 0 45px #bd8d3830;
-  background: #421e2a;
-}
-
-.slide {
-  position: absolute;
-  inset: 0;
-  padding: 35px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(50px) scale(.96);
-  transition: opacity .55s ease,
-              transform .55s ease,
-              visibility .55s;
-  background:
-    radial-gradient(ellipse at top, #713c43, transparent 65%),
-    linear-gradient(145deg, #351721, #180e16);
-}
-
-.slide.active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0) scale(1);
-  z-index: 2;
-}
-
-.slide h1 {
-  color: #f5d58b;
-  font-size: clamp(30px, 9vw, 43px);
-  margin: 15px 0;
-  text-shadow: 0 0 15px #d7a54b66;
-}
-
-.slide h2 {
-  color: #e8c77e;
-  font-size: 25px;
-  margin: 14px 0;
-}
-
-.slide p {
-  color: #f4e4c7;
-  line-height: 1.8;
-  font-size: 16px;
-}
-
-.ornament {
-  color: #e7bd69;
-  font-size: 40px;
-  margin: 15px;
-}
-
-.small {
-  letter-spacing: 4px;
-  font-size: 11px !important;
-  color: #dcbf87 !important;
-}
-
-.gold-line {
-  width: 70%;
-  height: 1px;
-  background: linear-gradient(
-    to right, transparent, #e5bd70, transparent
-  );
-  margin: 22px 0;
-}
-
-.names {
-  line-height: 2.3;
-  color: #f6dfaa;
-  font-size: 19px;
-}
-
-.address {
-  color: #fff0d0;
-  font-size: 19px;
-  line-height: 2;
-}
-
-.house {
-  font-size: 85px;
-  filter: drop-shadow(0 0 15px #e3b66c);
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  from { transform: scale(1); }
-  to { transform: scale(1.08); }
-}
-
-@keyframes sparkle {
-  0% { opacity: .2; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(-10px); }
-}
-
-.sparkle {
-  animation: sparkle 2s infinite alternate;
-}
-
-.controls {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  z-index: 5;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 15px;
-}
-
-button {
-  background: #d5ad68;
-  color: #351721;
-  border: none;
-  padding: 11px 17px;
-  border-radius: 30px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:active {
-  transform: scale(.95);
-}
-
-.dots {
-  display: flex;
-  gap: 8px;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #80624a;
-  border: 1px solid #e5c47e;
-}
-
-.dot.active {
-  background: #f5d58b;
-  transform: scale(1.35);
-}
-
-.hint {
-  position: absolute;
-  bottom: 75px;
-  width: 100%;
-  font-size: 12px;
-  color: #dfc38e;
-  text-align: center;
-  z-index: 4;
-  letter-spacing: 1px;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="app" id="app">
-
-  <!-- CARD 1 -->
-  <section class="slide active">
-    <p class="small">ॐ श्री गणेशाय नमः</p>
-    <div class="ornament sparkle">✧ ❀ ✧</div>
-    <p class="small">A NEW BEGINNING</p>
-    <h1>शुभारंभ</h1>
-    <div class="gold-line"></div>
-    <h2>GRUHA PRAVESH</h2>
-    <p>HOUSE INAUGURATION CEREMONY</p>
-    <div class="ornament">🏡</div>
-    <p>20th November</p>
-    <p class="small">A HOME FILLED WITH LOVE & HAPPINESS</p>
-  </section>
-
-  <!-- CARD 2 -->
-  <section class="slide">
-    <div class="ornament">❀</div>
-    <p class="small">YOU ARE CORDIALLY INVITED</p>
-    <h2>A Beautiful New Beginning</h2>
-    <div class="gold-line"></div>
-    <p>
-      With immense joy and happiness,
-      we invite you and your family
-      to grace the auspicious occasion
-      of our new home inauguration.
-    </p>
-    <br>
-    <p>Your presence and blessings will
-      make this day truly special.
-    </p>
-    <div class="ornament">✧</div>
-  </section>
-
-  <!-- CARD 3 -->
-  <section class="slide">
-    <p class="small">WITH LOVE & BLESSINGS</p>
-    <div class="ornament">❀</div>
-    <h2>The Mishra Family</h2>
-    <div class="gold-line"></div>
-    <div class="names">
-      Uma Shankar Mishra<br>
-      Late Anjani Ku. Mishra<br>
-      Agrima Mishra<br>
-      Anvesha Mishra
-    </div>
-    <div class="gold-line"></div>
-    <p>With the blessings of our elders,
-      we begin a beautiful new chapter.
-    </p>
-  </section>
-
-  <!-- CARD 4 -->
-  <section class="slide">
-    <div class="house">🏡</div>
-    <p class="small">WE AWAIT YOUR PRESENCE</p>
-    <h2>Join Our Celebration</h2>
-    <div class="gold-line"></div>
-    <p class="small">DATE</p>
-    <h2>20th November</h2>
-    <p class="small">TIME</p>
-    <h2>10:00 AM</h2>
-    <div class="gold-line"></div>
-    <p class="small">VENUE</p>
-    <div class="address">
-      Satipara,<br>
-      Near Manas Palace
-    </div>
-    <br>
-    <h2>Thank You!</h2>
-    <p class="small">THE MISHRA FAMILY</p>
-  </section>
-
-  <div class="hint" id="hint">
-    ← SWIPE TO EXPLORE →
-  </div>
-
-  <div class="controls">
-    <button onclick="changeSlide(-1)">← Back</button>
-    <div class="dots" id="dots">
-      <span class="dot active"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-    </div>
-    <button onclick="changeSlide(1)">Next →</button>
-  </div>
-
-</div>
-
-<script>
-let current = 0;
-
-const slides = document.querySelectorAll(".slide");
-const dots = document.querySelectorAll(".dot");
-const hint = document.getElementById("hint");
-
-function showSlide(index) {
-  current = (index + slides.length) % slides.length;
-
-  slides.forEach((slide, i) => {
-    slide.classList.toggle("active", i === current);
-  });
-
-  dots.forEach((dot, i) => {
-    dot.classList.toggle("active", i === current);
-  });
-
-  hint.textContent = current === 3
-    ? "THANK YOU FOR CELEBRATING WITH US ✧"
-    : "← SWIPE TO EXPLORE →";
-}
-
-function changeSlide(direction) {
-  showSlide(current + direction);
-}
-
-// Swipe support
-let startX = 0;
-const app = document.getElementById("app");
-
-app.addEventListener("touchstart", (e) => {
-  startX = e.changedTouches[0].screenX;
-}, { passive: true });
-
-app.addEventListener("touchend", (e) => {
-  let endX = e.changedTouches[0].screenX;
-  let distance = endX - startX;
-
-  if (Math.abs(distance) > 45) {
-    changeSlide(distance < 0 ? 1 : -1);
-  }
-}, { passive: true });
-
-// Keyboard support
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") changeSlide(1);
-  if (e.key === "ArrowLeft") changeSlide(-1);
-});
-</script>
-
 </body>
 </html>
